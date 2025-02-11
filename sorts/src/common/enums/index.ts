@@ -1,1 +1,1 @@
-export * from './sort-type.enum'
+export * from "./sort-type.enum";
