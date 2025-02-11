@@ -18,6 +18,9 @@ class SortRoutes {
       validateSort,
       async (req, res) => await this.sortController.sortArray(req, res),
     );
+    this.router.post(
+      "/sort-generated-array", async (req, res) => await this.sortController.sortGeneratedArray(req, res),
+    );
   }
 }
 
