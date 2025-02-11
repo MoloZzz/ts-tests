@@ -1,10 +1,21 @@
 import { Router } from "express";
-import generatingRoutes from "./generating/generating.routes";
+import generatingRoutes from "./generating-module/generating.routes";
 import sortRoutes from "./sort-module/sort.routes";
+import benchmarkRoutes from "./benchmark-module/benchmark.routes";
 
-const apiRouter = Router();
+export class ApiRouter {
+  public router: Router;
 
-apiRouter.use("/sorting", sortRoutes);
-apiRouter.use("/generating", generatingRoutes);
+  constructor() {
+    this.router = Router();
+    this.initializeRoutes();
+  }
 
-export default apiRouter;
+  private initializeRoutes(): void {
+    this.router.use("/sorting", sortRoutes);
+    this.router.use("/generating", generatingRoutes);
+    this.router.use("/benchmark", benchmarkRoutes);
+  }
+}
+
+export default new ApiRouter().router;
