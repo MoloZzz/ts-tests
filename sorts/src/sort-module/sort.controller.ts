@@ -9,6 +9,7 @@ export class SortController {
   }
 
   async sortArray(req: Request, res: Response): Promise<void> {
+    console.log("something");
     try {
       const { array, type } = req.body;
       const sortedArray = await this.sortService.sort(array, type);

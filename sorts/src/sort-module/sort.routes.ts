@@ -2,7 +2,7 @@ import { Router } from "express";
 import { SortController } from "./sort.controller";
 import { validateSort } from "./validators/sort.middleware";
 
-export class SortRoutes {
+class SortRoutes {
   public router: Router;
   private sortController: SortController;
 
@@ -13,8 +13,10 @@ export class SortRoutes {
   }
 
   private initializeRoutes(): void {
-    this.router.post("/sort", validateSort, (req, res) =>
-      this.sortController.sortArray(req, res),
+    this.router.post(
+      "/sort",
+      validateSort,
+      async (req, res) => await this.sortController.sortArray(req, res),
     );
   }
 }
