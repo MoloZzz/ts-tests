@@ -11,7 +11,9 @@ export class BenchmarkRoutes {
     this.initializeRoutes();
   }
 
-  private initializeRoutes(): void {}
+  private initializeRoutes(): void {
+    //Поки що відсутні
+  }
 }
 
 export default new BenchmarkRoutes().router;

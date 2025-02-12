@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { GeneratingService } from "./generating.service";
 
 export class GeneratingController {
@@ -8,16 +8,16 @@ export class GeneratingController {
     this.generatingService = new GeneratingService();
   }
 
-  async generateRandomArray(req: Request, res: Response): Promise<void> {
-    try {
-      const { length, max } = req.body;
-      const generatedArray = await this.generatingService.generateRandomArray(
-        length,
-        max,
-      );
-      res.json({ generatedArray });
-    } catch (error) {
-      res.status(500).json({ error: "Internal server error" });
-    }
-  }
+  generateRandomArray = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    const { length, max } = req.body;
+    const generatedArray = await this.generatingService.generateRandomArray(
+      length,
+      max,
+    );
+    res.json({ generatedArray });
+  };
 }

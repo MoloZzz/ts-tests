@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { InfoController } from "./info.controller";
+import { asyncHandler } from "../errors/async-handler.middleware";
 
 class InfoRoutes {
   public router: Router;
@@ -14,7 +15,9 @@ class InfoRoutes {
   private initializeRoutes(): void {
     this.router.get(
       "/sort-types",
-      async (req, res) => await this.infoController.getSortTypes(req, res),
+      asyncHandler((req, res, next) =>
+        this.infoController.getSortTypes(req, res, next),
+      ),
     );
   }
 }

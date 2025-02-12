@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { GeneratingController } from "./generating.controller";
-import { validateGenerating } from "./validators/generating.middleware";
+import { validateGenerateArray } from "./validators/generating.middleware";
+import { asyncHandler } from "../errors/async-handler.middleware";
 
 export class GeneratingRoutes {
   public router: Router;
@@ -13,8 +14,12 @@ export class GeneratingRoutes {
   }
 
   private initializeRoutes(): void {
-    this.router.post("/generate-array", validateGenerating, (req, res) =>
-      this.generatingController.generateRandomArray(req, res),
+    this.router.post(
+      "/generate-array",
+      validateGenerateArray,
+      asyncHandler((req, res, next) => {
+        this.generatingController.generateRandomArray(req, res, next);
+      }),
     );
   }
 }
