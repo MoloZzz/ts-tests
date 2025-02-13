@@ -1,10 +1,17 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ConfigModule } from '@nestjs/config';
+import * as Joi from 'joi';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [ConfigModule.forRoot({
+    isGlobal: true,
+    envFilePath: [`src/.env`],
+    validationSchema: Joi.object({
+        API_DOCS_ENABLED: Joi.string().optional(),
+        PORT: Joi.number().required(),
+    }),
+}),],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
