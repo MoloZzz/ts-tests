@@ -1,16 +1,22 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as bodyParser from 'body-parser';
+import { json, urlencoded } from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.use(bodyParser.json({ limit: '50mb' }));
-  app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-  app.enableCors();
+  app.use(json({ limit: '50mb' }));
+  app.use(urlencoded({ limit: '50mb', extended: true }));
+  
+  app.enableCors({
+    origin: '*',
+    credentials: true,
+  });
+
   const configService = app.get(ConfigService);
-  await app.listen(configService.get<number>('PORT'));
+  const port = configService.get<number>('PORT') || 3000;
+
+  await app.listen(port);
 }
 bootstrap();

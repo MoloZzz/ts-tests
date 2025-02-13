@@ -22,6 +22,7 @@ import { AppResolver } from './app.resolver';
     PrismaModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
+      debug: true,
       autoSchemaFile: true,
     }),
   ],
