@@ -12,3 +12,10 @@ Jest + Supertest - for testing
 Develop a backend(build api) for a platform that allows users to add books(stories), view details, and leave comments, raiting.
 Provide hands-on experience with GraphQL API, Prisma ORM and NestJS. 
 Optionally, refresh the practical skills of transaction isolation levels. 
+
+## Prisma 
+migrate
+npx prisma migrate dev --name init
+
+Resolver - це аналог контролера у REST API.
+Він обробляє запити (Query) і мутації (Mutation), викликаючи відповідні сервіси.
