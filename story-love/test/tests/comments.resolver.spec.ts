@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { StoriesResolver } from 'src/stories/stories.resolver';
+import { CommentsResolver } from 'src/comments/comments.resolver';
 
-describe('StoriesResolver', () => {
-  let resolver: StoriesResolver;
+describe('CommentsResolver', () => {
+  let resolver: CommentsResolver;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [StoriesResolver],
+      providers: [CommentsResolver],
     }).compile();
 
-    resolver = module.get<StoriesResolver>(StoriesResolver);
+    resolver = module.get<CommentsResolver>(CommentsResolver);
   });
 
   it('should be defined', () => {

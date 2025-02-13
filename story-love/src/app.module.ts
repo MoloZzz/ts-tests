@@ -6,6 +6,8 @@ import { PrismaModule } from './libs/prisma/prisma.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { AppResolver } from './app.resolver';
+import { CommentsModule } from './comments/comments.module';
+import { LoggerModule } from './libs/logger/logger.module';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { AppResolver } from './app.resolver';
       debug: true,
       autoSchemaFile: true,
     }),
+    CommentsModule,
+    LoggerModule,
   ],
   providers: [AppResolver],
 })
