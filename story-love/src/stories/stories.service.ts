@@ -4,13 +4,13 @@ import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class StoriesService {
-    constructor(@Inject(PrismaService) private prisma: PrismaService) {}
+  constructor(@Inject(PrismaService) private prisma: PrismaService) {}
 
-    async create(data : CreateStoryInput) {
-      return this.prisma.story.create({ data });
-    }
-  
-    async findAll() {
-      return this.prisma.story.findMany();
-    }
+  async create(data: CreateStoryInput) {
+    return this.prisma.story.create({ data });
+  }
+
+  async findAll() {
+    return this.prisma.story.findMany();
+  }
 }

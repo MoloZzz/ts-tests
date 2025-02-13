@@ -2,12 +2,12 @@ import { InputType, Field } from '@nestjs/graphql';
 
 @InputType()
 export class CreateStoryInput {
-  @Field()
+  @Field(() => String, { nullable: false })
   title: string;
 
-  @Field()
+  @Field(() => String, { nullable: false })
   content: string;
 
-  @Field()
+  @Field(() => String, { nullable: false })
   author: string;
 }
