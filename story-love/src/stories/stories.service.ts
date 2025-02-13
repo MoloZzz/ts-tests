@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateStoryInput } from '../common/dto/create-story.input';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../libs/prisma/prisma.service';
 
 @Injectable()
 export class StoriesService {
