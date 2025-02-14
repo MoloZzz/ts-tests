@@ -8,6 +8,9 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { AppResolver } from './app.resolver';
 import { CommentsModule } from './comments/comments.module';
 import { LoggerModule } from './libs/logger/logger.module';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
+import { ContentModule } from './content/content.module';
 
 @Module({
   imports: [
@@ -29,6 +32,9 @@ import { LoggerModule } from './libs/logger/logger.module';
     }),
     CommentsModule,
     LoggerModule,
+    AuthModule,
+    UserModule,
+    ContentModule,
   ],
   providers: [AppResolver],
 })
