@@ -3,7 +3,7 @@ import { Query, Resolver } from '@nestjs/graphql';
 @Resolver()
 export class AppResolver {
   @Query(() => String)
-  ping(): string {
+  async ping(): Promise<string> {
     return 'pong';
   }
 }
