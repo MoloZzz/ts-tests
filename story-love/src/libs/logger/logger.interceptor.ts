@@ -1,12 +1,7 @@
-import {
-  CallHandler,
-  ExecutionContext,
-  Injectable,
-  NestInterceptor,
-} from '@nestjs/common';
+import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { Observable, tap } from 'rxjs';
-import { LoggerService } from '../logger/logger.service';
+import { Observable, tap, catchError, throwError } from 'rxjs';
+import { LoggerService } from './logger.service';
 
 @Injectable()
 export class GraphQLLoggingInterceptor implements NestInterceptor {
@@ -28,10 +23,8 @@ export class GraphQLLoggingInterceptor implements NestInterceptor {
 
     return next.handle().pipe(
       tap(async (response) => {
-        const endTime = Date.now();
-        const duration = endTime - startTime;
-
-        const logData = {
+        const duration = Date.now() - startTime;
+        await this.loggerService.logGraphQLRequest({
           timestamp: new Date().toISOString(),
           clientIp,
           host,
@@ -39,9 +32,23 @@ export class GraphQLLoggingInterceptor implements NestInterceptor {
           query,
           variables,
           response,
-        };
-
-        await this.loggerService.logGraphQLRequest(logData);
+          status: 'success',
+        });
+      }),
+      catchError(async (error) => {
+        const duration = Date.now() - startTime;
+        await this.loggerService.logGraphQLRequest({
+          timestamp: new Date().toISOString(),
+          clientIp,
+          host,
+          executionTime: `${duration}ms`,
+          query,
+          variables,
+          error: error.message,
+          stack: error.stack,
+          status: 'error',
+        });
+        return throwError(() => error);
       }),
     );
   }

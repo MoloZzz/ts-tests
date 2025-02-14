@@ -10,40 +10,46 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(uuid()) @db.VarChar(255)
-  name          String   @db.VarChar(255)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  credentialsId String?  @unique @db.VarChar(255)
+  id            String       @id @default(uuid()) @db.VarChar(255)
+  name          String       @db.VarChar(255)
+  createdAt     DateTime     @default(now()) @map("created_at")
+  updatedAt     DateTime     @updatedAt @map("updated_at")
+  credentialsId String?      @unique @map("credentials_id") @db.VarChar(255)
   roles         UsersRoles[]
   comments      Comment[]
   credentials   Credentials? @relation(fields: [credentialsId], references: [id])
   stories       Story[]      @relation("UserToStory")
+
+  @@map("users")
 }
 
 model Story {
-  id         String   @id @default(uuid()) @db.VarChar(255)
-  title      String   @db.VarChar(255)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  authorId   String?  @db.VarChar(255)
-  author     User?    @relation("UserToStory", fields: [authorId], references: [id])
-  comments   Comment[]
-  contents   Content[]
+  id        String    @id @default(uuid()) @db.VarChar(255)
+  title     String    @db.VarChar(255)
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  authorId  String?   @map("author_id") @db.VarChar(255)
+  author    User?     @relation("UserToStory", fields: [authorId], references: [id])
+  comments  Comment[]
+  contents  Content[]
+
+  @@map("stories")
 }
 
 model Comment {
-  id        String   @id @default(uuid()) @db.VarChar(255)
-  text      String   @db.VarChar(500)
-  userId    String?  @db.VarChar(255)
-  storyId   String?  @db.VarChar(255)
-  parentId  String?  @db.VarChar(255)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      User?    @relation(fields: [userId], references: [id])
-  story     Story?   @relation(fields: [storyId], references: [id])
-  parent    Comment? @relation("CommentToComment", fields: [parentId], references: [id])
+  id        String    @id @default(uuid()) @db.VarChar(255)
+  text      String    @db.VarChar(500)
+  userId    String?   @map("user_id") @db.VarChar(255)
+  storyId   String?   @map("story_id") @db.VarChar(255)
+  parentId  String?   @map("parent_id") @db.VarChar(255)
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  user      User?     @relation(fields: [userId], references: [id])
+  story     Story?    @relation(fields: [storyId], references: [id])
+  parent    Comment?  @relation("CommentToComment", fields: [parentId], references: [id])
   children  Comment[] @relation("CommentToComment")
+
+  @@map("comments")
 }
 
 model Credentials {
@@ -52,32 +58,40 @@ model Credentials {
   password  String   @db.VarChar(255)
   telegram  String?  @db.VarChar(255)
   phone     String?  @db.VarChar(255)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
   user      User?
+
+  @@map("credentials")
 }
 
 model Content {
   id        String   @id @default(uuid()) @db.VarChar(255)
-  elkId     String?  @db.VarChar(255)
-  elkIndex  String?  @db.VarChar(255)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  storyId   String?  @db.VarChar(255)
+  elkId     String?  @map("elk_id") @db.VarChar(255)
+  elkIndex  String?  @map("elk_index") @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  storyId   String?  @map("story_id") @db.VarChar(255)
   story     Story?   @relation(fields: [storyId], references: [id])
+
+  @@map("contents")
 }
 
 model Role {
-  code  String   @id @db.VarChar(50)
-  label String   @db.VarChar(255)
+  code  String       @id @db.VarChar(50)
+  label String       @db.VarChar(255)
   users UsersRoles[]
+
+  @@map("roles")
 }
 
 model UsersRoles {
   id        String   @id @default(uuid()) @db.VarChar(255)
-  userId    String   @db.VarChar(255)
-  roleCode  String   @db.VarChar(50)
-  createdAt DateTime @default(now())
+  userId    String   @map("user_id") @db.VarChar(255)
+  roleCode  String   @map("role_code") @db.VarChar(50)
+  createdAt DateTime @default(now()) @map("created_at")
   user      User     @relation(fields: [userId], references: [id])
   role      Role     @relation(fields: [roleCode], references: [code])
+
+  @@map("users_roles")
 }
