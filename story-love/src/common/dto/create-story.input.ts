@@ -6,8 +6,8 @@ export class CreateStoryInput {
   title: string;
 
   @Field(() => String, { nullable: false })
-  content: string;
+  author: string;
 
   @Field(() => String, { nullable: false })
-  author: string;
+  authorId: string;
 }

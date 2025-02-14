@@ -15,7 +15,8 @@ export class StoriesResolver {
   }
 
   @Query(() => [Story], { name: 'stories' })
-  async findAll(): Promise<Story[]> {
+  async findAll() {
+    //: Promise<Story[]>
     return await this.storiesService.findAll();
   }
 }

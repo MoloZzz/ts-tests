@@ -1,14 +1,14 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { Story } from './story.entity';
 import { User } from './user.entity';
-import { Comment } from './comment.entity';
 
 @ObjectType()
-export class Story {
+export class Comment {
   @Field(() => ID)
   id: string;
 
   @Field()
-  title: string;
+  text: string;
 
   @Field(() => Date)
   createdAt: Date;
@@ -17,8 +17,14 @@ export class Story {
   updatedAt: Date;
 
   @Field(() => User, { nullable: true })
-  author?: User;
+  user?: User;
+
+  @Field(() => Story, { nullable: true })
+  story?: Story;
+
+  @Field(() => Comment, { nullable: true })
+  parent?: Comment;
 
   @Field(() => [Comment])
-  comments?: Comment[];
+  children: Comment[];
 }
