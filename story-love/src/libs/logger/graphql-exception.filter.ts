@@ -13,7 +13,8 @@ export class GraphQLExceptionFilter implements ExceptionFilter {
 
     const logData = {
       timestamp: new Date().toISOString(),
-      clientIp: req?.headers['x-forwarded-for'] || req?.connection?.remoteAddress,
+      clientIp:
+        req?.headers['x-forwarded-for'] || req?.connection?.remoteAddress,
       host: req?.headers?.host,
       query: req?.body?.query,
       variables: req?.body?.variables,

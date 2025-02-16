@@ -5,7 +5,8 @@
 - **NestJS** - Main backend framework
 - **GraphQL** (@nestjs/graphql) - API for working with books and comments
 - **Prisma ORM** - For working with PostgreSQL
-- **PostgreSQL** - Database
+- **PostgreSQL** - Main database
+- **Elastic search** - Additional database (for text content)
 - **Docker** - For deploying PostgreSQL
 - **Apollo Client** - GraphQL client
 - **Jest + Supertest** - For testing
