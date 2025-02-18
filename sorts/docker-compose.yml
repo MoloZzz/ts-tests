@@ -23,7 +23,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "4000:4000"
+      - "4000" # Тільки внутрішній, щоб ззовні був доступ тільки через nginx
     environment:
       - NODE_ENV=development
     volumes:

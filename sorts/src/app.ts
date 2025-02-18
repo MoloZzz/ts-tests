@@ -11,8 +11,9 @@ app.use(express.json({ limit: "50mb" }));
 app.use("/api", ApiRouter.getRouter());
 app.use(errorHandler);
 
-const port = Number(process.env.PORT) || 3000;
+const port : number = Number(process.env.PORT) || 3000;
+const host : string = '0.0.0.0';
 
-app.listen(port, '0.0.0.0', () =>
-  console.log(`Server is running on port http://localhost:${port}`),
-);
+app.listen(port, host, () => {
+  console.log(`Server is running on http://${host}:${port}`);
+});
