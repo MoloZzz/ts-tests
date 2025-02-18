@@ -9,20 +9,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id            String       @id @default(uuid()) @db.VarChar(255)
-  name          String       @db.VarChar(255)
-  createdAt     DateTime     @default(now()) @map("created_at")
-  updatedAt     DateTime     @updatedAt @map("updated_at")
-  credentialsId String?      @unique @map("credentials_id") @db.VarChar(255)
-  roles         UsersRoles[]
-  comments      Comment[]
-  credentials   Credentials? @relation(fields: [credentialsId], references: [id])
-  stories       Story[]      @relation("UserToStory")
-
-  @@map("users")
-}
-
 model Story {
   id        String    @id @default(uuid()) @db.VarChar(255)
   title     String    @db.VarChar(255)
@@ -77,10 +63,23 @@ model Content {
   @@map("contents")
 }
 
+model User {
+  id            String       @id @default(uuid()) @db.VarChar(255)
+  name          String       @db.VarChar(255)
+  createdAt     DateTime     @default(now()) @map("created_at")
+  updatedAt     DateTime     @updatedAt @map("updated_at")
+  credentialsId String?      @unique @map("credentials_id") @db.VarChar(255)
+  comments      Comment[]
+  credentials   Credentials? @relation(fields: [credentialsId], references: [id])
+  roles         Role[]       @relation("UserRoles", through: "UsersRoles")
+
+  @@map("users")
+}
+
 model Role {
   code  String       @id @db.VarChar(50)
   label String       @db.VarChar(255)
-  users UsersRoles[]
+  users User[]       @relation("UserRoles", through: "UsersRoles")
 
   @@map("roles")
 }
@@ -90,8 +89,11 @@ model UsersRoles {
   userId    String   @map("user_id") @db.VarChar(255)
   roleCode  String   @map("role_code") @db.VarChar(50)
   createdAt DateTime @default(now()) @map("created_at")
+
   user      User     @relation(fields: [userId], references: [id])
   role      Role     @relation(fields: [roleCode], references: [code])
 
   @@map("users_roles")
+  @@unique([userId, roleCode])
 }
+

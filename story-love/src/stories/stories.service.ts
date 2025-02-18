@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { CreateStoryInput } from '../common/dto/create-story.input';
+import { CreateStoryInput } from '../common/inputs/create-story.input';
 import { PrismaService } from '../libs/prisma/prisma.service';
 import { Story } from 'src/common/entities/story.entity';
 

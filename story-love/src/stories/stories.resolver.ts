@@ -1,7 +1,7 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { StoriesService } from './stories.service';
 import { Story } from '../common/entities/story.entity';
-import { CreateStoryInput } from 'src/common/dto/create-story.input';
+import { CreateStoryInput } from 'src/common/inputs/create-story.input';
 
 @Resolver(() => Story)
 export class StoriesResolver {

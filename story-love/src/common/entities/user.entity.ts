@@ -3,6 +3,7 @@ import { Credentials } from './credentials.entity';
 import { Story } from './story.entity';
 import { UsersRoles } from './users-roles.entity';
 import { Comment } from './comment.entity';
+import { Role } from './role.entity';
 
 @ObjectType()
 export class User {
@@ -27,6 +28,6 @@ export class User {
   @Field(() => [Comment])
   comments: Comment[];
 
-  @Field(() => [UsersRoles])
-  roles: UsersRoles[];
+  @Field(() => [Role])
+  roles: Role[];
 }
