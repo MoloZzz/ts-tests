@@ -1,3 +1,3 @@
-export enum RoleEnum{
-    reader = "reader"
+export enum RoleEnum {
+  reader = 'reader',
 }

@@ -9,10 +9,13 @@ export class UserService {
   constructor(@Inject(PrismaService) private prisma: PrismaService) {}
 
   async create(data: CreateUserDto) {
-      return this.prisma.user.create({ data: {
-        ...data, roles: {
-          connect: [{ code: "reader"}],
+    return this.prisma.user.create({
+      data: {
+        ...data,
+        roles: {
+          connect: [{ code: 'reader' }],
         },
-      } });
-    }
+      },
+    });
+  }
 }
